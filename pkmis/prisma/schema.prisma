@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model claim {
+  id                  Int               @id @default(autoincrement())
+  insured_coverage_id Int?
+  health_facility_id  Int?
+  date_of_service     DateTime          @db.Date
+  total_billed_amount Decimal?          @db.Decimal(10, 2)
+  claimed_amount      Decimal?          @db.Decimal(10, 2)
+  claim_status        String?           @db.VarChar(50)
+  rejection_reason    String?
+  approval_date       DateTime?         @db.Date
+  health_facility     health_facility?  @relation(fields: [health_facility_id], references: [id], onUpdate: NoAction)
+  insured_coverage    insured_coverage? @relation(fields: [insured_coverage_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  claim_document      claim_document[]
+}
+
+model claim_document {
+  id              Int      @id @default(autoincrement())
+  claim_id        Int?
+  document_type   String?  @db.VarChar(255)
+  submission_date DateTime @db.Date
+  file_path       String?
+  claim           claim?   @relation(fields: [claim_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model company {
+  id               Int                @id @default(autoincrement())
+  company_name     String             @db.VarChar(255)
+  contact_email    String?            @db.VarChar(255)
+  phone_number     String?            @db.VarChar(20)
+  address          String?
+  industry_type    String?            @db.VarChar(255)
+  license_number   String?            @db.VarChar(100)
+  employee         employee[]
+  insurance_policy insurance_policy[]
+  quotation        quotation[]
+}
+
+model employee {
+  id               Int                @id @default(autoincrement())
+  company_id       Int?
+  staff_id         String             @unique @db.VarChar(50)
+  full_name        String             @db.VarChar(255)
+  date_of_birth    DateTime?          @db.Date
+  gender           String?            @db.VarChar(10)
+  phone_number     String?            @db.VarChar(20)
+  email            String?            @db.VarChar(255)
+  company          company?           @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  insured_coverage insured_coverage[]
+}
+
+model health_facility {
+  id                   Int      @id @default(autoincrement())
+  health_facility_name String   @db.VarChar(255)
+  is_partner_hf        Boolean? @default(false)
+  phone_number         String?  @db.VarChar(20)
+  location             String?
+  email                String?  @db.VarChar(255)
+  claim                claim[]
+}
+
+model insurance_broker {
+  id             Int         @id @default(autoincrement())
+  broker_name    String      @db.VarChar(255)
+  contact_email  String?     @db.VarChar(255)
+  phone_number   String?     @db.VarChar(20)
+  address        String?
+  license_number String?     @db.VarChar(100)
+  quotation      quotation[]
+}
+
+model insurance_policy {
+  id                       Int                        @id @default(autoincrement())
+  company_id               Int?
+  quotation_id             Int?
+  start_date               DateTime                   @db.Date
+  end_date                 DateTime                   @db.Date
+  package_name             String?                    @db.VarChar(255)
+  policy_name              String?                    @db.VarChar(255)
+  policy_type              String?                    @db.VarChar(100)
+  is_terminated            Boolean?                   @default(false)
+  terminated_date          DateTime?                  @db.Date
+  company                  company?                   @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  quotation                quotation?                 @relation(fields: [quotation_id], references: [id], onUpdate: NoAction)
+  insurance_policy_benefit insurance_policy_benefit[]
+  insurance_policy_premium insurance_policy_premium[]
+  insured_coverage         insured_coverage[]
+}
+
+model insurance_policy_benefit {
+  id                  Int               @id @default(autoincrement())
+  insurance_policy_id Int?
+  benefit_name        String?           @db.VarChar(255)
+  coverage_amount     Decimal?          @db.Decimal(10, 2)
+  insurance_policy    insurance_policy? @relation(fields: [insurance_policy_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model insurance_policy_premium {
+  id                  Int               @id @default(autoincrement())
+  insurance_policy_id Int?
+  premium_type        String?           @db.VarChar(100)
+  premium_amount      Decimal?          @db.Decimal(10, 2)
+  insurance_policy    insurance_policy? @relation(fields: [insurance_policy_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model insured_coverage {
+  id                  Int               @id @default(autoincrement())
+  employee_id         Int?
+  insurance_policy_id Int?
+  date_of_birth       DateTime?         @db.Date
+  member_card_number  String?           @unique @db.VarChar(100)
+  coverage_start_date DateTime          @db.Date
+  coverage_end_date   DateTime          @db.Date
+  status              String?           @db.VarChar(50)
+  claim               claim[]
+  employee            employee?         @relation(fields: [employee_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  insurance_policy    insurance_policy? @relation(fields: [insurance_policy_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model quotation {
+  id                  Int                @id @default(autoincrement())
+  company_id          Int?
+  insurance_broker_id Int?
+  date_issued         DateTime           @db.Date
+  proposed_premium    Decimal?           @db.Decimal(10, 2)
+  sum_insured         Decimal?           @db.Decimal(10, 2)
+  coverage_details    String?
+  quotation_status    String?            @db.VarChar(50)
+  acceptance_date     DateTime?          @db.Date
+  insurance_policy    insurance_policy[]
+  company             company?           @relation(fields: [company_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  insurance_broker    insurance_broker?  @relation(fields: [insurance_broker_id], references: [id], onUpdate: NoAction)
+}
+
+model users {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(100)
+  email      String    @unique @db.VarChar(100)
+  password   String
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+}
