@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export async function DashboardCards() {
+export async function QuotationDashboardCards() {
   const totalSales = 10;
   const totalProducts = 10;
   const totalCustomers = 10;
@@ -10,7 +10,7 @@ export async function DashboardCards() {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card className="bg-red-50">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Quotation</CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -25,15 +25,15 @@ export async function DashboardCards() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">${totalSales.toFixed(2)}</div>
-          <p className="text-xs text-muted-foreground">
-            +20.1% from last month
-          </p>
+          <div className="text-2xl font-bold">{totalSales.toFixed(2)}</div>
+          <p className="text-xs text-muted-foreground">Avg. Premium: $3,000</p>
         </CardContent>
       </Card>
       <Card className="bg-orange-50">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Products</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Pending Quotation
+          </CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -50,12 +50,14 @@ export async function DashboardCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{totalProducts}</div>
-          <p className="text-xs text-muted-foreground">+180 since last month</p>
+          <p className="text-xs text-muted-foreground">Max Premium: $6,000</p>
         </CardContent>
       </Card>
       <Card className="bg-blue-50">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Customers</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Approved Quotation
+          </CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -73,12 +75,14 @@ export async function DashboardCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{totalCustomers}</div>
-          <p className="text-xs text-muted-foreground">+19% from last month</p>
+          <p className="text-xs text-muted-foreground">Number of company: 2</p>
         </CardContent>
       </Card>
       <Card className="bg-green-50">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Suppliers</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Accepted Quotation
+          </CardTitle>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -95,7 +99,7 @@ export async function DashboardCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{totalSuppliers}</div>
-          <p className="text-xs text-muted-foreground">+4 since last week</p>
+          <p className="text-xs text-muted-foreground">Premium Amount: $500</p>
         </CardContent>
       </Card>
     </div>

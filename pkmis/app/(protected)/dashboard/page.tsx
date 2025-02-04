@@ -1,14 +1,13 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
-import { RecentSales } from "@/components/dashboard/recent-sales";
-import { TopProducts } from "@/components/dashboard/top-products";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DashboardShell } from "@/components/dashboard/dashboard-shell";
-import { DashboardCards } from "@/components/dashboard/dashboard-cards";
+import { QuotationDashboardCards } from "@/components/dashboard/quotation-dashboard-cards";
 import { CardSkeleton } from "@/components/dashboard/card-skeleton";
 // import { InventoryOverview } from "@/components/dashboard/inventory-overview";
 // import { UserStats } from "@/components/dashboard/user-stats";
 import PageWrapper from "@/components/page-wrapper";
+import { OverviewDashboardCards } from "@/components/dashboard/overview-dashboard-cards";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -19,21 +18,28 @@ export default async function DashboardPage() {
   return (
     <PageWrapper>
       <DashboardShell>
-        <DashboardHeader
-          heading="Dashboard"
-          text="Overview of your store's performance and inventory."
-        />
         <Suspense fallback={<CardSkeleton />}>
-          <DashboardCards />
+          <DashboardHeader
+            heading="Dashboard"
+            text="Overview of insurance insight performance"
+          />
+          <OverviewDashboardCards />
         </Suspense>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+        <Suspense fallback={<CardSkeleton />}>
+          <DashboardHeader
+            heading="Quotation"
+            text="Overview of quotation performance"
+          />
+          <QuotationDashboardCards />
+        </Suspense>
+        {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <Suspense fallback={<CardSkeleton />}>
             <RecentSales />
           </Suspense>
           <Suspense fallback={<CardSkeleton />}>
             <TopProducts />
           </Suspense>
-        </div>
+        </div> */}
         {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <Suspense fallback={<CardSkeleton />}>
             <UserStats data={[]} />
