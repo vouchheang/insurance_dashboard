@@ -10,6 +10,7 @@ import PageWrapper from "@/components/page-wrapper";
 import { OverviewDashboardCards } from "@/components/dashboard/overview-dashboard-cards";
 import { TopSaleList } from "@/components/dashboard/top_sales";
 import { GenderOverview } from "@/components/dashboard/gender_overview";
+import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -32,6 +33,7 @@ export default async function DashboardPage() {
           />
           <OverviewDashboardCards />
         </Suspense>
+        <Separator />
         <Suspense fallback={<CardSkeleton />}>
           <DashboardHeader
             heading="Quotation"
@@ -39,6 +41,11 @@ export default async function DashboardPage() {
           />
           <QuotationDashboardCards />
         </Suspense>
+        <Separator />
+        <DashboardHeader
+          heading="Analytic Data"
+          text="Overview of analytic data"
+        />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
           <Suspense fallback={<CardSkeleton />}>
             <GenderOverview data={genderOverviews} />
