@@ -8,6 +8,8 @@ import { CardSkeleton } from "@/components/dashboard/card-skeleton";
 // import { UserStats } from "@/components/dashboard/user-stats";
 import PageWrapper from "@/components/page-wrapper";
 import { OverviewDashboardCards } from "@/components/dashboard/overview-dashboard-cards";
+import { TopSaleList } from "@/components/dashboard/top_sales";
+import { GenderOverview } from "@/components/dashboard/gender_overview";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -15,6 +17,11 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
+  const genderOverviews = [
+    { name: "Male", value: 120, color: "#1ee854" },
+    { name: "Female", value: 300, color: "#e88b33" },
+  ];
+
   return (
     <PageWrapper>
       <DashboardShell>
@@ -32,14 +39,14 @@ export default async function DashboardPage() {
           />
           <QuotationDashboardCards />
         </Suspense>
-        {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
           <Suspense fallback={<CardSkeleton />}>
-            <RecentSales />
+            <GenderOverview data={genderOverviews} />
           </Suspense>
           <Suspense fallback={<CardSkeleton />}>
-            <TopProducts />
+            <TopSaleList />
           </Suspense>
-        </div> */}
+        </div>
         {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
           <Suspense fallback={<CardSkeleton />}>
             <UserStats data={[]} />
