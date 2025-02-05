@@ -21,10 +21,10 @@ PGADMIN_DEFAULT_PASSWORD=your_default_password
 
 ```docker
 # Build and start containers with environment variables from .env.dev file in detached mode.
-docker compose --env-file .env.dev up -d --build
+docker compose -f compose.local.yml --env-file .env.dev up -d --build
 
 # Stop and remove all containers, networks, and volumes created by docker-compose.
-docker compose down
+docker compose -f compose.local.yml down
 
 # List all running Docker containers with basic info (ID, name, ports).
 docker ps
@@ -43,7 +43,7 @@ docker logs <container_name or id>
 
 ```
 
-### docker-compose.yml
+### docker-local.yml
 
 ```yml
 services:
@@ -79,7 +79,7 @@ volumes:
 ## Start docker-compose in local
 
 1. Create `.env.dev`
-2. Run `docker compose --env-file .env.dev up -d --build`
+2. Run `docker compose -f compose.local.yml --env-file .env.dev up -d --build`
 3. Run `docker ps`
 4. Run `docker logs <container_name or id>`
 5. Open any browser and go to http://localhost:5050
