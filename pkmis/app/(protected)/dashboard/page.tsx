@@ -42,10 +42,7 @@ export default async function DashboardPage() {
           <QuotationDashboardCards />
         </Suspense>
         <Separator />
-        <DashboardHeader
-          heading="Analytic Data"
-          text="Overview of analytic data"
-        />
+        <DashboardHeader heading="Analytic Data" text="Overview of analytic" />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
           <Suspense fallback={<CardSkeleton />}>
             <GenderOverview data={genderOverviews} />
