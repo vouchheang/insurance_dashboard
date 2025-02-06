@@ -1,0 +1,1 @@
+ALTER TABLE employee ADD Nationality varchar(255);

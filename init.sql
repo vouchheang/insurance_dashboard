@@ -25,7 +25,8 @@ CREATE TABLE users (
 -- Insert sample users with hashed passwords
 INSERT INTO users (name, email, password) VALUES 
 ('sopheak', 'sopheak@demo.com', crypt('pass123', gen_salt('bf',10))),
-('sophea', 'sophea@demo.com', crypt('pass123', gen_salt('bf',10)));
+('sophea', 'sophea@demo.com', crypt('pass123', gen_salt('bf',10))),
+('vouchh', 'vouchh@demo.com', crypt('pass123', gen_salt('bf',10)))
 
 CREATE TABLE company (
     id SERIAL PRIMARY KEY,
