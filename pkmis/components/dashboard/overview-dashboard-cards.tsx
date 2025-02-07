@@ -3,13 +3,12 @@ import { getTotalInsured } from "@/services/dashboard/get-total-insured";
 import { getTotalSumInsured } from "@/services/dashboard/get-total-sum-insured";
 import { getTotalPolicy } from "@/services/dashboard/get-total-policy";
 import { getTotalPremium } from "@/services/dashboard/get-total-premium";
-import { getTotalprospect } from"@/services/dashboard/get-prospect"
+import { getTotalprospect } from "@/services/dashboard/get-prospect";
+import { getTotalcompany } from "@/services/dashboard//get-accept-company";
+import { getTotalpartner } from "@/services/dashboard/HF.partner";
+import { getTotalnotpartner } from "@/services/dashboard/no-parner";
 
 export async function OverviewDashboardCards() {
-  // const totalSales = 10;
-  // const totalCustomers = 10;
-  const totalSuppliers = 10;
-
   const totalInsured = await getTotalInsured();
   console.log(totalInsured);
 
@@ -19,6 +18,9 @@ export async function OverviewDashboardCards() {
   const totalPolicy = await getTotalPolicy();
   const totalPrmium = await getTotalPremium();
   const totalProspect = await getTotalprospect();
+  const acceptedCompany = await getTotalcompany();
+  const totalPartner = await getTotalpartner();
+  const totalNotPartner = await getTotalnotpartner();
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -89,7 +91,9 @@ export async function OverviewDashboardCards() {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{Number(totalProspect)}</div>
-          <p className="text-xs text-muted-foreground">Number of company: 4</p>
+          <p className="text-xs text-muted-foreground">
+            Number of company: {Number(acceptedCompany)}
+          </p>
         </CardContent>
       </Card>
       <Card className="bg-green-50">
@@ -112,8 +116,10 @@ export async function OverviewDashboardCards() {
           </svg>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{totalSuppliers}</div>
-          <p className="text-xs text-muted-foreground">Not Partner: 2</p>
+          <div className="text-2xl font-bold">{Number(totalPartner)}</div>
+          <p className="text-xs text-muted-foreground">
+            Not Partner: {Number(totalNotPartner)}
+          </p>
         </CardContent>
       </Card>
     </div>
