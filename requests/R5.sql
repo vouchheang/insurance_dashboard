@@ -14,14 +14,14 @@ FROM
     insured_coverage i
     JOIN insurance_policy p ON i.insurance_policy_id = p.id
     JOIN insurance_policy_benefit b ON b.insurance_policy_id = p.id 
-
-3.1    
+    
+3.1
 SELECT
     count(e.*) - count(i.*) AS "Prospect"
 FROM
     employee e
-    LEFT JOIN insured_coverage i ON e.id = i.employee_id
-
+    LEFT JOIN insured_coverage i ON e.id = i.employee_id 
+    
 3.2
 SELECT
     count(*)
@@ -30,4 +30,19 @@ FROM
     JOIN insurance_policy i ON i.company_id = c.id
     JOIN quotation q ON q.id = i.quotation_id
 WHERE
-    q.quotation_status = 'Accepted';
+    q.quotation_status != 'Accepted';
+
+4.
+SELECT
+    COUNT(*) AS total_hf_partner
+FROM
+    health_facility
+WHERE
+    is_partner_hf = 'true';
+
+SELECT
+    COUNT(*) AS total_hf_partner
+FROM
+    health_facility
+WHERE
+    is_partner_hf = 'false';

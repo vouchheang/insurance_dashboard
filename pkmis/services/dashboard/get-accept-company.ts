@@ -10,7 +10,6 @@ from
     join quotation q ON q.id = i.quotation_id
 where
     q.quotation_status != 'Accepted';`;
-  console.log(data);
   if (data.length > 0) return data[0].company;
   
   else return "0";
